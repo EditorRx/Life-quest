@@ -1295,5 +1295,1476 @@ function deleteQuest(id){
 //====================================================
 //              BUTTON CONNECTION
 //====================================================
-                
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    () => {
+
+
+
+        const addButton = document.querySelector(
+
+            "#addQuestBtn"
+
+        );
+
+
+
+        if(addButton){
+
+
+            addButton.addEventListener(
+
+                "click",
+
+                openQuestModal
+
+            );
+
+
+        }
+
+
+
+        setupQuestForm();
+
+
+    }
+
+);
+/*====================================================
+            LIFEQUEST v1.0
+
+            Part 2C
+            Quest Completion + Rewards
+====================================================*/
+
+
+//====================================================
+//              COMPLETE QUEST
+//====================================================
+
+
+function completeQuest(id){
+
+
+    const quest = LifeQuest.quests.find(
+
+        q => q.id === id
+
+    );
+
+
+
+    if(!quest)
+
+        return;
+
+
+
+    if(quest.completed){
+
+        showToast(
+
+            "⭐ Quest already completed"
+
+        );
+
+        return;
+
+    }
+
+
+
+    quest.completed = true;
+
+
+    quest.progress = 100;
+
+
+
+    // XP reward based on priority
+
+    let reward = 50;
+
+
+
+    if(quest.priority === "rare")
+
+        reward = 100;
+
+
+
+    if(quest.priority === "epic")
+
+        reward = 250;
+
+
+
+    if(quest.priority === "legendary")
+
+        reward = 500;
+
+
+
+    addXP(reward);
+
+
+
+    createMemory(quest);
+
+
+
+    checkAchievements();
+
+
+
+    saveGame();
+
+
+
+    renderQuests();
+
+
+
+    launchConfetti();
+
+
+
+    showToast(
+
+        `🏆 Quest Complete +${reward} XP`
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              UPDATE PROGRESS
+//====================================================
+
+
+function updateQuestProgress(
+
+    id,
+
+    value
+
+){
+
+
+    const quest = LifeQuest.quests.find(
+
+        q => q.id === id
+
+    );
+
+
+
+    if(!quest)
+
+        return;
+
+
+
+    quest.progress =
+
+        Math.min(
+
+            100,
+
+            Math.max(0,value)
+
+        );
+
+
+
+    if(quest.progress === 100){
+
+        completeQuest(id);
+
+        return;
+
+    }
+
+
+
+    saveGame();
+
+
+
+    renderQuests();
+
+
+}
+
+
+
+//====================================================
+//              MEMORY CREATION
+//====================================================
+
+
+function createMemory(quest){
+
+
+
+    const memory = {
+
+
+        id:Date.now(),
+
+
+
+        title:
+
+            quest.title,
+
+
+
+        description:
+
+            quest.description,
+
+
+
+        image:
+
+            quest.image,
+
+
+
+        completedDate:
+
+            new Date().toLocaleDateString(),
+
+
+
+        xp:
+
+            LifeQuest.player.xp
+
+
+
+    };
+
+
+
+    LifeQuest.memories.push(
+
+        memory
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              QUEST XP PREVIEW
+//====================================================
+
+
+function getQuestReward(priority){
+
+
+    const rewards = {
+
+
+        common:50,
+
+        rare:100,
+
+        epic:250,
+
+        legendary:500
+
+
+    };
+
+
+
+    return rewards[priority] || 50;
+
+
+}
+
+
+
+//====================================================
+//              COMPLETION CHECK
+//====================================================
+
+
+function getCompletedQuestCount(){
+
+
+    return LifeQuest.quests.filter(
+
+        quest => quest.completed
+
+    ).length;
+
+
+}
+/*====================================================
+            LIFEQUEST v1.0
+
+            Part 3A
+            Companion Engine
+====================================================*/
+
+
+//====================================================
+//              CREATE COMPANION
+//====================================================
+
+
+function createCompanion(data){
+
+
+    const companion = {
+
+
+        id: Date.now(),
+
+
+        name:
+
+            data.name || "Unknown",
+
+
+
+        role:
+
+            data.role || "Supporter",
+
+
+
+        notes:
+
+            data.notes || "",
+
+
+
+        image:
+
+            data.image || "",
+
+
+
+        joined:
+
+            new Date().toLocaleDateString()
+
+
+    };
+
+
+
+    LifeQuest.companions.push(
+
+        companion
+
+    );
+
+
+
+    saveGame();
+
+
+
+    renderCompanions();
+
+
+
+    showToast(
+
+        "🤝 New Companion Joined"
+
+    );
+
+
+
+    return companion;
+
+
+}
+
+
+
+//====================================================
+//              COMPANION CONTAINER
+//====================================================
+
+
+function getCompanionContainer(){
+
+
+    return document.querySelector(
+
+        "#companionContainer"
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              RENDER COMPANIONS
+//====================================================
+
+
+function renderCompanions(){
+
+
+    const container =
+
+        getCompanionContainer();
+
+
+
+    if(!container)
+
+        return;
+
+
+
+    container.innerHTML = "";
+
+
+
+    LifeQuest.companions.forEach(
+
+        companion => {
+
+
+
+            const card =
+
+            document.createElement(
+
+                "div"
+
+            );
+
+
+
+            card.className =
+
+            "ally-card glass";
+
+
+
+            card.innerHTML = `
+
+
+
+            <div class="ally-top">
+
+
+                ${
+
+                companion.image ?
+
+                `<img class="ally-image"
+
+                src="${companion.image}">`
+
+                :
+
+                `<div class="ally-image">
+
+                🤝
+
+                </div>`
+
+                }
+
+
+
+                <div>
+
+
+                <h2 class="ally-name">
+
+                ${companion.name}
+
+                </h2>
+
+
+                <span class="ally-role">
+
+                ${companion.role}
+
+                </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+            <div class="ally-body">
+
+
+            <p class="ally-notes">
+
+            ${companion.notes}
+
+            </p>
+
+
+            </div>
+
+
+
+
+            <div class="ally-footer">
+
+
+            <button
+
+            class="danger-btn"
+
+            onclick="removeCompanion(${companion.id})">
+
+
+            Remove
+
+            </button>
+
+
+            </div>
+
+
+
+            `;
+
+
+
+            container.appendChild(card);
+
+
+        }
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              REMOVE COMPANION
+//====================================================
+
+
+function removeCompanion(id){
+
+
+    LifeQuest.companions =
+
+    LifeQuest.companions.filter(
+
+        companion =>
+
+        companion.id !== id
+
+    );
+
+
+
+    saveGame();
+
+
+
+    renderCompanions();
+
+
+
+    showToast(
+
+        "🤝 Companion Removed"
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              COMPANION COUNT
+//====================================================
+
+
+function getCompanionCount(){
+
+
+    return LifeQuest.companions.length;
+
+
+}
+
+
+
+//====================================================
+//              LOAD COMPANIONS
+//====================================================
+
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    ()=>{
+
+
+        renderCompanions();
+
+
+    }
+
+);
+/*====================================================
+            LIFEQUEST v1.0
+
+            Part 3B
+            Quest Companion Linking
+====================================================*/
+
+
+//====================================================
+//          GET COMPANION BY ID
+//====================================================
+
+
+function getCompanionById(id){
+
+
+    return LifeQuest.companions.find(
+
+        companion =>
+
+        companion.id === id
+
+    );
+
+
+}
+
+
+
+//====================================================
+//          ASSIGN COMPANION TO QUEST
+//====================================================
+
+
+function assignCompanionToQuest(
+
+    questID,
+
+    companionID
+
+){
+
+
+    const quest = LifeQuest.quests.find(
+
+        q => q.id === questID
+
+    );
+
+
+
+    if(!quest)
+
+        return;
+
+
+
+    if(!quest.companions)
+
+        quest.companions = [];
+
+
+
+    if(
+
+        !quest.companions.includes(
+
+            companionID
+
+        )
+
+    ){
+
+
+        quest.companions.push(
+
+            companionID
+
+        );
+
+
+    }
+
+
+
+    saveGame();
+
+
+
+    renderQuests();
+
+
+
+    showToast(
+
+        "🤝 Companion assigned"
+
+    );
+
+
+}
+
+
+
+//====================================================
+//          REMOVE COMPANION FROM QUEST
+//====================================================
+
+
+function removeCompanionFromQuest(
+
+    questID,
+
+    companionID
+
+){
+
+
+    const quest = LifeQuest.quests.find(
+
+        q => q.id === questID
+
+    );
+
+
+
+    if(!quest)
+
+        return;
+
+
+
+    quest.companions =
+
+        quest.companions.filter(
+
+            id => id !== companionID
+
+        );
+
+
+
+    saveGame();
+
+
+
+    renderQuests();
+
+
+}
+
+
+
+//====================================================
+//          DISPLAY QUEST COMPANIONS
+//====================================================
+
+
+function getQuestCompanionsHTML(
+
+    quest
+
+){
+
+
+    if(
+
+        !quest.companions ||
+
+        quest.companions.length === 0
+
+    ){
+
+        return "";
+
+    }
+
+
+
+    let html = `
+
+
+    <div class="quest-allies">
+
+
+    <strong>
+
+    🤝 Companions
+
+    </strong>
+
+
+    <div class="ally-tags">
+
+
+    `;
+
+
+
+    quest.companions.forEach(
+
+        id => {
+
+
+
+            const companion =
+
+                getCompanionById(id);
+
+
+
+            if(companion){
+
+
+                html += `
+
+
+                <span class="ally-tag">
+
+                ${companion.name}
+
+                </span>
+
+
+                `;
+
+
+            }
+
+
+        }
+
+    );
+
+
+
+    html += `
+
+    </div>
+
+    </div>
+
+    `;
+
+
+
+    return html;
+
+
+}
+
+
+
+//====================================================
+//          QUEST PARTY SIZE
+//====================================================
+
+function getQuestPartySize(
+
+    quest
+
+){
+
+
+    if(!quest.companions)
+
+        return 0;
+
+
+
+    return quest.companions.length;
+
+
+}
+
+
+
+//====================================================
+//          UPDATE QUEST RENDER
+//====================================================
+
+
+// This function refreshes quest cards
+
+// after companion changes
+
+
+function refreshQuestParty(){
+
+
+    renderQuests();
+
+
+}
+/*====================================================
+            LIFEQUEST v1.0
+
+            Part 4A
+            Achievement Engine
+====================================================*/
+
+
+//====================================================
+//              ACHIEVEMENT DATABASE
+//====================================================
+
+
+const achievementList = [
+
+
+    {
+
+        id:"first_step",
+
+        title:"First Step",
+
+        description:
+        "Completed your first quest",
+
+        icon:"🌱",
+
+        condition:
+
+        () => getCompletedQuestCount() >= 1
+
+    },
+
+
+    {
+
+        id:"quest_master",
+
+        title:"Quest Master",
+
+        description:
+        "Completed 10 quests",
+
+        icon:"⚔️",
+
+        condition:
+
+        () => getCompletedQuestCount() >= 10
+
+    },
+
+
+    {
+
+        id:"xp_hunter",
+
+        title:"XP Hunter",
+
+        description:
+        "Earned 1000 XP",
+
+        icon:"⚡",
+
+        condition:
+
+        () => LifeQuest.player.xp >= 1000
+
+    },
+
+
+    {
+
+        id:"legendary",
+
+        title:"Legendary Maverix",
+
+        description:
+        "Completed a legendary quest",
+
+        icon:"👑",
+
+        condition:
+
+        () =>
+
+        LifeQuest.quests.some(
+
+            q =>
+
+            q.completed &&
+
+            q.priority === "legendary"
+
+        )
+
+    }
+
+
+];
+
+
+
+//====================================================
+//              CHECK ACHIEVEMENTS
+//====================================================
+
+
+function checkAchievements(){
+
+
+    achievementList.forEach(
+
+        achievement => {
+
+
+
+            const alreadyUnlocked =
+
+            LifeQuest.achievements.some(
+
+                item =>
+
+                item.id === achievement.id
+
+            );
+
+
+
+            if(
+
+                achievement.condition()
+
+                &&
+
+                !alreadyUnlocked
+
+            ){
+
+
+                unlockAchievement(
+
+                    achievement
+
+                );
+
+
+            }
+
+
+        }
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              UNLOCK ACHIEVEMENT
+//====================================================
+
+
+function unlockAchievement(
+
+    achievement
+
+){
+
+
+    const badge = {
+
+
+        id:
+
+        achievement.id,
+
+
+        title:
+
+        achievement.title,
+
+
+        description:
+
+        achievement.description,
+
+
+        icon:
+
+        achievement.icon,
+
+
+        unlockedDate:
+
+        new Date()
+
+        .toLocaleDateString()
+
+
+    };
+
+
+
+    LifeQuest.achievements.push(
+
+        badge
+
+    );
+
+
+
+    saveGame();
+
+
+
+    showAchievementPopup(
+
+        badge
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              ACHIEVEMENT POPUP
+//====================================================
+
+
+function showAchievementPopup(
+
+    achievement
+
+){
+
+
+    const popup = document.querySelector(
+
+        "#achievementPopup"
+
+    );
+
+
+
+    if(!popup)
+
+        return;
+
+
+
+    popup.innerHTML = `
+
+
+    <i>
+
+    ${achievement.icon}
+
+    </i>
+
+
+    <div>
+
+
+    <h3>
+
+    Achievement Unlocked!
+
+    </h3>
+
+
+    <p>
+
+    ${achievement.title}
+
+    </p>
+
+
+    </div>
+
+
+    `;
+
+
+
+    popup.classList.add(
+
+        "show"
+
+    );
+
+
+
+    setTimeout(
+
+        ()=>{
+
+
+            popup.classList.remove(
+
+                "show"
+
+            );
+
+
+        },
+
+        4000
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              ACHIEVEMENT COUNT
+//====================================================
+
+
+function getAchievementCount(){
+
+
+    return LifeQuest.achievements.length;
+
+
+}
+/*====================================================
+            LIFEQUEST v1.0
+
+            Part 4B
+            Achievement Hall Renderer
+====================================================*/
+
+
+//====================================================
+//          ACHIEVEMENT CONTAINER
+//====================================================
+
+
+function getAchievementContainer(){
+
+
+    return document.querySelector(
+
+        "#achievementContainer"
+
+    );
+
+
+}
+
+
+
+//====================================================
+//          RENDER ACHIEVEMENTS
+//====================================================
+
+
+function renderAchievements(){
+
+
+    const container =
+
+        getAchievementContainer();
+
+
+
+    if(!container)
+
+        return;
+
+
+
+    container.innerHTML = "";
+
+
+
+    achievementList.forEach(
+
+        achievement => {
+
+
+
+            const unlocked =
+
+            LifeQuest.achievements.some(
+
+                item =>
+
+                item.id === achievement.id
+
+            );
+
+
+
+            const card =
+
+            document.createElement(
+
+                "div"
+
+            );
+
+
+
+            card.className =
+
+            `achievement-card glass
+
+            ${
+
+            unlocked ?
+
+            ""
+
+            :
+
+            "locked"
+
+            }`;
+
+
+
+            card.innerHTML = `
+
+
+            <div class="achievement-icon">
+
+
+                ${
+
+                unlocked ?
+
+                achievement.icon
+
+                :
+
+                "🔒"
+
+                }
+
+
+            </div>
+
+
+
+            <div class="achievement-info">
+
+
+                <h2 class="achievement-title">
+
+
+                ${achievement.title}
+
+
+                </h2>
+
+
+
+                <p class="achievement-description">
+
+
+                ${achievement.description}
+
+
+                </p>
+
+
+
+
+                <span class="achievement-date">
+
+
+                ${
+
+                unlocked ?
+
+                "Unlocked"
+
+                :
+
+                "Locked"
+
+                }
+
+
+                </span>
+
+
+
+            </div>
+
+
+            `;
+
+
+
+            container.appendChild(card);
+
+
+
+        }
+
+    );
+
+
+}
+
+
+
+//====================================================
+//          ACHIEVEMENT REFRESH
+//====================================================
+
+
+function refreshAchievements(){
+
+
+    checkAchievements();
+
+
+    renderAchievements();
+
+
+}
+
+
+
+//====================================================
+//          AUTO LOAD
+//====================================================
 
