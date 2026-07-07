@@ -1,1 +1,1387 @@
+/*====================================================
 
+            LIFEQUEST v1.0
+            by Maverix
+
+======================================================
+
+TABLE OF CONTENTS
+
+1. Variables
+2. Reset
+3. Base
+4. Utilities
+5. Background
+6. Loading Screen
+7. Sidebar
+8. Topbar
+9. Dashboard
+10. Quests
+11. Favorites
+12. Allies
+13. Achievements
+14. Memory Vault
+15. Settings
+16. Modals
+17. Animations
+18. Responsive
+
+====================================================*/
+
+
+/*====================================================
+                    VARIABLES
+====================================================*/
+
+:root{
+
+    --bg:#05070F;
+    --bg-light:#0C1222;
+    --bg-card:rgba(255,255,255,.08);
+
+    --glass:rgba(255,255,255,.08);
+    --glass-border:rgba(255,255,255,.14);
+
+    --text:#FFFFFF;
+    --text-light:#B7BCD1;
+
+    --cyan:#00F7FF;
+    --purple:#A855F7;
+    --pink:#FF4FD8;
+    --gold:#FFC857;
+    --green:#22C55E;
+    --red:#FF4D6D;
+
+    /* Quest Rarity */
+
+    --common:#22C55E;
+    --rare:#3B82F6;
+    --epic:#A855F7;
+    --legendary:#F59E0B;
+    --mythic:#EF4444;
+
+    --radius:22px;
+
+    --shadow:
+
+        0 10px 30px rgba(0,0,0,.35);
+
+    --neon:
+
+        0 0 18px rgba(0,247,255,.25);
+
+    --transition:.35s ease;
+
+}
+
+
+/*====================================================
+                    RESET
+====================================================*/
+
+*{
+
+    margin:0;
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    font-family:"Poppins",sans-serif;
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+}
+
+
+/*====================================================
+                    TYPOGRAPHY
+====================================================*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+
+    font-family:"Orbitron",sans-serif;
+
+    font-weight:700;
+
+}
+
+p{
+
+    color:var(--text-light);
+
+    line-height:1.7;
+
+}
+
+
+/*====================================================
+                    LINKS
+====================================================*/
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+
+/*====================================================
+                    BUTTONS
+====================================================*/
+
+button{
+
+    border:none;
+
+    outline:none;
+
+    cursor:pointer;
+
+    font-family:inherit;
+
+    transition:var(--transition);
+
+}
+
+
+/*====================================================
+                    INPUTS
+====================================================*/
+
+input,
+textarea,
+select{
+
+    width:100%;
+
+    border:none;
+
+    outline:none;
+
+    color:white;
+
+    background:
+
+        rgba(255,255,255,.06);
+
+    padding:14px 18px;
+
+    border-radius:14px;
+
+    font-family:inherit;
+
+}
+
+textarea{
+
+    resize:vertical;
+
+    min-height:130px;
+
+}
+
+input::placeholder,
+textarea::placeholder{
+
+    color:#94A3B8;
+
+}
+
+
+/*====================================================
+                    IMAGES
+====================================================*/
+
+img{
+
+    display:block;
+
+    max-width:100%;
+
+}
+
+
+/*====================================================
+                    LISTS
+====================================================*/
+
+ul{
+
+    list-style:none;
+
+}
+
+
+/*====================================================
+                    GLASS EFFECT
+====================================================*/
+
+.glass{
+
+    background:var(--glass);
+
+    backdrop-filter:blur(20px);
+
+    -webkit-backdrop-filter:blur(20px);
+
+    border:
+
+        1px solid var(--glass-border);
+
+    box-shadow:var(--shadow);
+
+}
+
+
+/*====================================================
+                    PAGE SYSTEM
+====================================================*/
+
+.page{
+
+    display:none;
+
+    animation:fadePage .45s ease;
+
+}
+
+.page.active-page{
+
+    display:block;
+
+}
+
+
+/*====================================================
+                    UTILITIES
+====================================================*/
+
+.hidden{
+
+    display:none !important;
+
+}
+
+.text-center{
+
+    text-align:center;
+
+}
+
+.mt-1{
+
+    margin-top:10px;
+
+}
+
+.mt-2{
+
+    margin-top:20px;
+
+}
+
+.mt-3{
+
+    margin-top:30px;
+
+}
+
+
+/*====================================================
+                    SCROLLBAR
+====================================================*/
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#080C18;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    border-radius:100px;
+
+    background:
+
+        linear-gradient(
+
+            var(--cyan),
+
+            var(--purple)
+
+        );
+
+}
+
+
+/*====================================================
+                    SELECTION
+====================================================*/
+
+::selection{
+
+    background:var(--cyan);
+
+    color:black;
+
+}
+
+
+/*====================================================
+                    BASE ANIMATION
+====================================================*/
+
+@keyframes fadePage{
+
+    from{
+
+        opacity:0;
+
+        transform:
+
+            translateY(18px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+
+            translateY(0);
+
+    }
+
+}
+/*====================================================
+                CYBERPUNK BACKGROUND
+====================================================*/
+
+body{
+
+    position:relative;
+
+    background:
+        radial-gradient(circle at top left,
+        rgba(0,247,255,.08),
+        transparent 35%),
+
+        radial-gradient(circle at bottom right,
+        rgba(168,85,247,.08),
+        transparent 40%),
+
+        var(--bg);
+
+}
+
+/* Animated Grid */
+
+.background-grid{
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:-5;
+
+    background-image:
+
+        linear-gradient(
+            rgba(255,255,255,.04) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.04) 1px,
+            transparent 1px
+        );
+
+    background-size:45px 45px;
+
+    animation:gridMove 18s linear infinite;
+
+}
+
+/* Neon Glows */
+
+.background-glow{
+
+    position:fixed;
+
+    width:420px;
+    height:420px;
+
+    border-radius:50%;
+
+    filter:blur(120px);
+
+    pointer-events:none;
+
+    z-index:-4;
+
+    opacity:.45;
+
+}
+
+.glow-one{
+
+    top:-120px;
+    left:-120px;
+
+    background:var(--cyan);
+
+    animation:floatGlow1 12s ease-in-out infinite;
+
+}
+
+.glow-two{
+
+    right:-150px;
+    bottom:-150px;
+
+    background:var(--purple);
+
+    animation:floatGlow2 14s ease-in-out infinite;
+
+}
+
+/* Noise Layer */
+
+.background-noise{
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:-3;
+
+    opacity:.03;
+
+    background-image:
+
+        radial-gradient(
+            white 1px,
+            transparent 1px
+        );
+
+    background-size:7px 7px;
+
+}
+
+/* Particle Container */
+
+#particles{
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    overflow:hidden;
+
+    z-index:-2;
+
+}
+
+/*====================================================
+                LOADING SCREEN
+====================================================*/
+
+#loadingScreen{
+
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #04060D,
+            #09101F
+        );
+
+    z-index:99999;
+
+    transition:opacity .6s ease,
+               visibility .6s ease;
+
+}
+
+#loadingScreen.hide{
+
+    opacity:0;
+
+    visibility:hidden;
+
+}
+
+.loader-box{
+
+    width:min(460px,92%);
+
+    text-align:center;
+
+}
+
+.loader-title{
+
+    color:var(--cyan);
+
+    font-size:42px;
+
+    letter-spacing:5px;
+
+    text-shadow:
+
+        0 0 12px var(--cyan),
+        0 0 30px rgba(0,247,255,.35);
+
+}
+
+.loader-player{
+
+    margin-top:12px;
+
+    color:var(--text-light);
+
+    letter-spacing:2px;
+
+}
+
+.loader-player span{
+
+    color:var(--gold);
+
+    font-weight:700;
+
+}
+
+.loader-bar{
+
+    margin-top:30px;
+
+    width:100%;
+
+    height:14px;
+
+    overflow:hidden;
+
+    border-radius:100px;
+
+    background:
+
+        rgba(255,255,255,.08);
+
+    border:
+
+        1px solid rgba(255,255,255,.08);
+
+}
+
+.loader-fill{
+
+    width:0%;
+
+    height:100%;
+
+    border-radius:100px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            var(--purple),
+            var(--cyan)
+        );
+
+    animation:loadingFill 2.6s ease forwards;
+
+}
+
+.loader-status{
+
+    margin-top:20px;
+
+    color:var(--text-light);
+
+    letter-spacing:2px;
+
+    animation:statusBlink 1.4s infinite;
+
+}
+
+/*====================================================
+                    ANIMATIONS
+====================================================*/
+
+@keyframes loadingFill{
+
+    from{
+
+        width:0%;
+
+    }
+
+    to{
+
+        width:100%;
+
+    }
+
+}
+
+@keyframes statusBlink{
+
+    0%,100%{
+
+        opacity:.35;
+
+    }
+
+    50%{
+
+        opacity:1;
+
+    }
+
+}
+
+@keyframes gridMove{
+
+    from{
+
+        transform:translate(0,0);
+
+    }
+
+    to{
+
+        transform:translate(45px,45px);
+
+    }
+
+}
+
+@keyframes floatGlow1{
+
+    0%,100%{
+
+        transform:
+            translate(0,0);
+
+    }
+
+    50%{
+
+        transform:
+            translate(80px,60px);
+
+    }
+
+}
+
+@keyframes floatGlow2{
+
+    0%,100%{
+
+        transform:
+            translate(0,0);
+
+    }
+
+    50%{
+
+        transform:
+            translate(-70px,-60px);
+
+    }
+
+}
+
+/*====================================================
+                    MOBILE
+====================================================*/
+
+@media(max-width:768px){
+
+    .loader-title{
+
+        font-size:32px;
+
+        letter-spacing:3px;
+
+    }
+
+    .background-glow{
+
+        width:280px;
+        height:280px;
+
+        filter:blur(90px);
+
+    }
+
+}/*====================================================
+                    SIDEBAR
+====================================================*/
+
+#app{
+
+    display:flex;
+
+    min-height:100vh;
+
+}
+
+/* Sidebar */
+
+.sidebar{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:300px;
+    height:100vh;
+
+    padding:28px 22px;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:24px;
+
+    background:
+        rgba(8,12,24,.82);
+
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+
+    border-right:1px solid
+        rgba(255,255,255,.08);
+
+    overflow-y:auto;
+
+    z-index:1000;
+
+}
+
+/* Logo */
+
+.logo-section{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+.logo-icon{
+
+    width:60px;
+    height:60px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:18px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            var(--cyan),
+            var(--purple)
+        );
+
+    font-size:26px;
+
+    color:#fff;
+
+    box-shadow:
+
+        0 0 22px
+        rgba(0,247,255,.35);
+
+}
+
+.logo-text h1{
+
+    font-size:24px;
+
+    letter-spacing:2px;
+
+    color:var(--text);
+
+}
+
+.logo-text p{
+
+    margin-top:4px;
+
+    font-size:12px;
+
+    color:var(--text-light);
+
+}
+
+/*====================================================
+                PLAYER CARD
+====================================================*/
+
+.player-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    padding:18px;
+
+    border-radius:20px;
+
+}
+
+.player-avatar{
+
+    width:62px;
+    height:62px;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            var(--purple),
+            var(--cyan)
+        );
+
+    font-size:28px;
+
+    color:white;
+
+    flex-shrink:0;
+
+}
+
+.player-details{
+
+    flex:1;
+
+}
+
+.player-details h2{
+
+    font-size:18px;
+
+    color:white;
+
+}
+
+.player-rank{
+
+    display:inline-block;
+
+    margin-top:4px;
+
+    font-size:12px;
+
+    color:var(--gold);
+
+}
+
+.player-level{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.player-level span{
+
+    font-size:11px;
+
+    color:var(--text-light);
+
+}
+
+.player-level strong{
+
+    font-size:22px;
+
+    color:var(--cyan);
+
+    text-shadow:
+
+        0 0 12px
+        rgba(0,247,255,.4);
+
+}
+/*====================================================
+                NAVIGATION
+====================================================*/
+
+.sidebar-nav{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+.nav-btn{
+
+    width:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:15px 18px;
+
+    border-radius:16px;
+
+    background:transparent;
+
+    color:var(--text-light);
+
+    font-size:15px;
+
+    text-align:left;
+
+}
+
+.nav-btn i{
+
+    width:22px;
+
+    text-align:center;
+
+    font-size:18px;
+
+}
+
+.nav-btn:hover{
+
+    color:white;
+
+    background:
+
+        rgba(255,255,255,.08);
+
+    transform:translateX(6px);
+
+}
+
+.nav-btn.active{
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(0,247,255,.18),
+            rgba(168,85,247,.18)
+        );
+
+    color:white;
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.08);
+
+    box-shadow:
+
+        0 0 18px
+        rgba(0,247,255,.18);
+
+}
+
+/*====================================================
+                SIDEBAR FOOTER
+====================================================*/
+
+.sidebar-footer{
+
+    margin-top:auto;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
+}
+
+.daily-quote{
+
+    padding:18px;
+
+    border-radius:18px;
+
+}
+
+.daily-quote small{
+
+    color:var(--cyan);
+
+    display:block;
+
+    margin-bottom:10px;
+
+    letter-spacing:1px;
+
+}
+
+.daily-quote p{
+
+    font-size:14px;
+
+    line-height:1.7;
+
+}
+
+.version{
+
+    text-align:center;
+
+    font-size:12px;
+
+    color:var(--text-light);
+
+}
+
+/*====================================================
+                SCROLLBAR
+====================================================*/
+
+.sidebar::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+
+    background:
+
+        linear-gradient(
+            var(--cyan),
+            var(--purple)
+        );
+
+    border-radius:100px;
+
+}
+
+/*====================================================
+                RESPONSIVE
+====================================================*/
+
+@media(max-width:950px){
+
+    .sidebar{
+
+        width:90px;
+
+        padding:20px 12px;
+
+    }
+
+    .logo-text,
+    .player-details,
+    .daily-quote,
+    .version,
+    .nav-btn span,
+    .player-level{
+
+        display:none;
+
+    }
+
+    .logo-section,
+    .player-card{
+
+        justify-content:center;
+
+    }
+
+    .nav-btn{
+
+        justify-content:center;
+
+        padding:15px;
+
+    }
+
+}
+/*====================================================
+                MAIN CONTENT
+====================================================*/
+
+.main-content{
+
+    flex:1;
+
+    margin-left:300px;
+
+    min-height:100vh;
+
+    padding:28px;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+/*====================================================
+                    TOPBAR
+====================================================*/
+
+.topbar{
+
+    display:flex;
+  justify-content:space-between;
+
+    align-items:center;
+
+    gap:24px;
+
+    padding:22px 28px;
+
+    border-radius:22px;
+
+    margin-bottom:30px;
+
+    position:sticky;
+
+    top:20px;
+
+    z-index:100;
+
+}
+
+.topbar-left h1{
+
+    font-size:32px;
+
+    color:var(--text);
+
+    margin-bottom:6px;
+
+}
+
+.topbar-left p{
+
+    font-size:14px;
+
+    color:var(--text-light);
+
+}
+
+.topbar-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+/*====================================================
+                SEARCH BOX
+====================================================*/
+
+.search-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    width:320px;
+
+    padding:14px 18px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:var(--transition);
+
+}
+
+.search-box:hover{
+
+    border-color:rgba(0,247,255,.35);
+
+    box-shadow:0 0 18px rgba(0,247,255,.15);
+
+}
+
+.search-box i{
+
+    color:var(--cyan);
+
+}
+
+.search-box input{
+
+    padding:0;
+
+    border:none;
+
+    background:transparent;
+
+    color:white;
+
+}
+
+.search-box input::placeholder{
+
+    color:var(--text-light);
+
+}
+
+/*====================================================
+                ICON BUTTON
+====================================================*/
+
+.icon-btn{
+
+    width:52px;
+
+    height:52px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    color:white;
+
+    position:relative;
+
+    transition:var(--transition);
+
+}
+
+.icon-btn:hover{
+
+    transform:translateY(-3px);
+
+    border-color:rgba(0,247,255,.35);
+
+    box-shadow:0 0 18px rgba(0,247,255,.2);
+
+}
+
+.notification-dot{
+
+    position:absolute;
+
+    top:12px;
+
+    right:12px;
+
+    width:10px;
+
+    height:10px;
+
+    border-radius:50%;
+
+    background:var(--red);
+
+    box-shadow:0 0 10px var(--red);
+
+}
+
+/*====================================================
+                PRIMARY BUTTON
+====================================================*/
+
+#addQuestBtn,
+#newQuestTopBtn,
+#saveProfileBtn,
+.main-btn{
+
+    padding:14px 22px;
+
+    border-radius:16px;
+
+    background:
+      
