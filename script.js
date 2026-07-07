@@ -817,6 +817,483 @@ function createQuest(data){
     return quest;
 
 }
+//====================================================
+//              QUEST CONTAINER
+//====================================================
 
 
+function getQuestContainer(){
+
+
+    return document.querySelector(
+
+        "#questContainer"
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              RENDER QUESTS
+//====================================================
+
+
+function renderQuests(){
+
+
+    const container = getQuestContainer();
+
+
+
+    if(!container)
+
+        return;
+
+
+
+    container.innerHTML = "";
+
+
+
+    if(LifeQuest.quests.length === 0){
+
+
+        container.innerHTML = `
+
+        <div class="empty-state glass">
+
+            <i class="fa-solid fa-map"></i>
+
+            <h2>No quests yet</h2>
+
+            <p>
+
+            Your adventure begins by creating your first goal.
+
+            </p>
+
+        </div>
+
+        `;
+
+
+        return;
+
+
+    }
+
+
+
+    LifeQuest.quests.forEach(
+
+        quest => {
+
+
+
+        const card = document.createElement(
+
+            "div"
+
+        );
+
+
+
+        card.className =
+
+            `quest-card glass ${quest.priority}`;
+
+
+
+        card.innerHTML = `
+
+
+        <div class="quest-image">
+
+
+            ${
+
+            quest.image ?
+
+            `<img class="quest-img"
+
+            src="${quest.image}">`
+
+            :
+
+            ""
+
+            }
+
+
+
+            <button class="favorite-btn
+
+            ${quest.favorite ? "active":""}"
+
+            onclick="toggleFavorite(${quest.id})">
+
+
+            <i class="fa-solid fa-heart"></i>
+
+
+            </button>
+
+
+        </div>
+
+
+
+        <div class="quest-body">
+
+
+            <h2 class="quest-title">
+
+                ${quest.title}
+
+            </h2>
+
+
+
+            <p class="quest-description">
+
+                ${quest.description}
+
+            </p>
+
+
+
+            <div class="quest-progress">
+
+
+                <div class="progress-info">
+
+                    <span>Progress</span>
+
+                    <span>
+
+                    ${quest.progress}%
+
+                    </span>
+
+                </div>
+
+
+
+                <div class="progress-bar">
+
+
+                    <div class="progress-fill"
+
+                    style="width:${quest.progress}%">
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+
+        `;
+
+
+
+        container.appendChild(card);
+
+
+
+        }
+
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              INITIAL QUEST LOAD
+//====================================================
+
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    () => {
+
+
+        renderQuests();
+
+
+    }
+
+);/*====================================================
+            LIFEQUEST v1.0
+
+            Part 2B
+            Quest Creation Controls
+====================================================*/
+
+
+//====================================================
+//              QUEST MODAL
+//====================================================
+
+
+function openQuestModal(){
+
+
+    const modal = document.querySelector(
+
+        "#questModal"
+
+    );
+
+
+    if(modal){
+
+        modal.showModal();
+
+    }
+
+}
+
+
+
+function closeQuestModal(){
+
+
+    const modal = document.querySelector(
+
+        "#questModal"
+
+    );
+
+
+    if(modal){
+
+        modal.close();
+
+    }
+
+}
+
+
+
+//====================================================
+//              CREATE QUEST FORM
+//====================================================
+
+
+function setupQuestForm(){
+
+
+    const form = document.querySelector(
+
+        "#questForm"
+
+    );
+
+
+
+    if(!form)
+
+        return;
+
+
+
+    form.addEventListener(
+
+        "submit",
+
+        function(event){
+
+
+            event.preventDefault();
+
+
+
+            const formData =
+
+                new FormData(form);
+
+
+
+            const questData = {
+
+
+
+                title:
+
+                formData.get("title"),
+
+
+
+                description:
+
+                formData.get("description"),
+
+
+
+                category:
+
+                formData.get("category"),
+
+
+
+                priority:
+
+                formData.get("priority"),
+
+
+
+                image:
+
+                formData.get("image"),
+
+
+
+                notes:
+
+                formData.get("notes")
+
+
+
+            };
+
+
+
+            createQuest(
+
+                questData
+
+            );
+
+
+
+            form.reset();
+
+
+
+            closeQuestModal();
+
+
+
+            showToast(
+
+                "🎯 New Quest Added!"
+
+            );
+
+
+        }
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              FAVORITE SYSTEM
+//====================================================
+
+
+function toggleFavorite(id){
+
+
+    const quest = LifeQuest.quests.find(
+
+        q => q.id === id
+
+    );
+
+
+
+    if(!quest)
+
+        return;
+
+
+
+    quest.favorite =
+
+        !quest.favorite;
+
+
+
+    saveGame();
+
+
+    renderQuests();
+
+
+    showToast(
+
+        quest.favorite ?
+
+        "❤️ Added to Favorites"
+
+        :
+
+        "💔 Removed from Favorites"
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              DELETE QUEST
+//====================================================
+
+
+function deleteQuest(id){
+
+
+    LifeQuest.quests =
+
+        LifeQuest.quests.filter(
+
+            q => q.id !== id
+
+        );
+
+
+
+    saveGame();
+
+
+    renderQuests();
+
+
+
+    showToast(
+
+        "🗑 Quest Removed"
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              BUTTON CONNECTION
+//====================================================
+                
 
