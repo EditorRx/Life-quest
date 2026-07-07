@@ -4252,3 +4252,791 @@ function launchConfetti(){
             4 + 2,
 
 
+            rotation:
+
+            Math.random()
+
+            *
+
+            360
+
+
+
+        });
+
+
+    }
+
+
+
+    function animate(){
+
+
+        ctx.clearRect(
+
+            0,
+
+            0,
+
+            canvas.width,
+
+            canvas.height
+
+        );
+
+
+
+        particles.forEach(
+
+            particle => {
+
+
+
+                ctx.save();
+
+
+
+                ctx.translate(
+
+                    particle.x,
+
+                    particle.y
+
+                );
+
+
+
+                ctx.rotate(
+
+                    particle.rotation
+
+                );
+
+
+
+                ctx.fillRect(
+
+                    0,
+
+                    0,
+
+                    particle.size,
+
+                    particle.size
+
+                );
+
+
+
+                ctx.restore();
+
+
+
+                particle.y +=
+
+                    particle.speed;
+
+
+
+                particle.rotation +=
+
+                    .05;
+
+
+
+            }
+
+        );
+
+
+
+        particles = particles.filter(
+
+            particle =>
+
+            particle.y < canvas.height
+
+        );
+
+
+
+        if(
+
+            particles.length > 0
+
+        ){
+
+
+            requestAnimationFrame(
+
+                animate
+
+            );
+
+
+        }
+
+
+        else{
+
+
+            ctx.clearRect(
+
+                0,
+
+                0,
+
+                canvas.width,
+
+                canvas.height
+
+            );
+
+
+        }
+
+
+    }
+
+
+
+    animate();
+
+
+}
+
+
+
+//====================================================
+//          ACHIEVEMENT CELEBRATION
+//====================================================
+
+
+function celebrateAchievement(
+
+    achievement
+
+){
+
+
+    launchConfetti();
+
+
+
+    showToast(
+
+        `${achievement.icon}
+
+        ${achievement.title} Unlocked!`
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              SCREEN FLASH
+//====================================================
+
+
+function screenFlash(){
+
+
+    const flash = document.createElement(
+
+        "div"
+
+    );
+
+
+
+    flash.className =
+
+        "screen-flash";
+
+
+
+    document.body.appendChild(
+
+        flash
+
+    );
+
+
+
+    setTimeout(
+
+        ()=>{
+
+
+            flash.remove();
+
+
+        },
+
+        500
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              BIG REWARD EFFECT
+//====================================================
+
+
+function rewardAnimation(){
+
+
+    launchConfetti();
+
+
+    screenFlash();
+
+
+}
+
+
+
+//====================================================
+//              WINDOW RESIZE
+//====================================================
+
+
+window.addEventListener(
+
+    "resize",
+
+    ()=>{
+
+
+        const canvas = document.querySelector(
+
+            "#confettiCanvas"
+
+        );
+
+
+
+        if(canvas){
+
+
+            canvas.width =
+
+            window.innerWidth;
+
+
+
+            canvas.height =
+
+            window.innerHeight;
+
+
+        }
+
+
+    }
+
+);
+/*====================================================
+            LIFEQUEST v1.0
+
+            Part 8A
+            Stability + Protection Engine
+====================================================*/
+
+
+//====================================================
+//              SAFE SAVE SYSTEM
+//====================================================
+
+
+function safeSave(){
+
+
+    try{
+
+
+        saveGame();
+
+
+
+    }
+
+    catch(error){
+
+
+        console.error(
+
+            "Save failed:",
+
+            error
+
+        );
+
+
+        showToast(
+
+            "⚠️ Save error"
+
+        );
+
+
+    }
+
+
+}
+
+
+
+//====================================================
+//              DATA VALIDATION
+//====================================================
+
+
+function validateData(){
+
+
+    if(!LifeQuest.player){
+
+
+        LifeQuest.player = {
+
+
+            name:"Maverix",
+
+            rank:"Dream Chaser",
+
+            level:1,
+
+            xp:0
+
+
+        };
+
+
+    }
+
+
+
+    if(!Array.isArray(
+
+        LifeQuest.quests
+
+    )){
+
+
+        LifeQuest.quests = [];
+
+
+    }
+
+
+
+    if(!Array.isArray(
+
+        LifeQuest.companions
+
+    )){
+
+
+        LifeQuest.companions = [];
+
+
+    }
+
+
+
+    if(!Array.isArray(
+
+        LifeQuest.memories
+
+    )){
+
+
+        LifeQuest.memories = [];
+
+
+    }
+
+
+
+    if(!Array.isArray(
+
+        LifeQuest.achievements
+
+    )){
+
+
+        LifeQuest.achievements = [];
+
+
+    }
+
+
+
+    safeSave();
+
+
+}
+
+
+
+//====================================================
+//              AUTO SAVE
+//====================================================
+
+
+function enableAutoSave(){
+
+
+    setInterval(
+
+        ()=>{
+
+
+            safeSave();
+
+
+
+        },
+
+        30000
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              PERFORMANCE HELPER
+//====================================================
+
+
+function refreshEverything(){
+
+
+    updatePlayerUI();
+
+
+    renderQuests();
+
+
+    renderCompanions();
+
+
+    renderAchievements();
+
+
+    renderMemories();
+
+
+}
+
+
+
+//====================================================
+//              ERROR PROTECTION
+//====================================================
+
+
+window.addEventListener(
+
+    "error",
+
+    (event)=>{
+
+
+        console.error(
+
+            "LifeQuest Error:",
+
+            event.error
+
+        );
+
+
+    }
+
+);
+
+
+
+//====================================================
+//              START STABILITY ENGINE
+//====================================================
+
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    ()=>{
+
+
+        validateData();
+
+
+        enableAutoSave();
+
+
+
+    }
+
+);
+/*====================================================
+            LIFEQUEST v1.0
+
+            Part 8B
+            Final Polish Engine
+====================================================*/
+
+
+//====================================================
+//              KEYBOARD SHORTCUTS
+//====================================================
+
+
+document.addEventListener(
+
+    "keydown",
+
+    (event)=>{
+
+
+        // Create quest shortcut
+
+        if(
+
+            event.key === "n"
+
+            &&
+
+            !event.ctrlKey
+
+        ){
+
+
+            openQuestModal();
+
+
+        }
+
+
+
+        // Open dashboard
+
+        if(event.key === "1"){
+
+
+            openPage(
+
+                "dashboard"
+
+            );
+
+
+        }
+
+
+
+        // Open quests
+
+        if(event.key === "2"){
+
+
+            openPage(
+
+                "quests"
+
+            );
+
+
+        }
+
+
+
+        // Open companions
+
+        if(event.key === "3"){
+
+
+            openPage(
+
+                "allies"
+
+            );
+
+
+        }
+
+
+    }
+
+);
+
+
+
+//====================================================
+//              LOADING SCREEN
+//====================================================
+
+
+function hideLoadingScreen(){
+
+
+    const loader = document.querySelector(
+
+        "#loadingScreen"
+
+    );
+
+
+
+    if(loader){
+
+
+        loader.classList.add(
+
+            "hide"
+
+        );
+
+
+
+        setTimeout(
+
+            ()=>{
+
+
+                loader.remove();
+
+
+
+            },
+
+            700
+
+        );
+
+
+    }
+
+
+}
+
+
+
+//====================================================
+//              SYSTEM STATUS
+//====================================================
+
+
+function systemOnline(){
+
+
+    console.log(
+
+        `
+
+        ⚡ LIFEQUEST ONLINE
+
+        Player: ${LifeQuest.player.name}
+
+        Level: ${LifeQuest.player.level}
+
+        Quests: ${LifeQuest.quests.length}
+
+        Companions: ${LifeQuest.companions.length}
+
+        `
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              FINAL REFRESH
+//====================================================
+
+
+function finalSync(){
+
+
+    calculateLevel();
+
+
+    updatePlayerUI();
+
+
+    renderQuests();
+
+
+    renderCompanions();
+
+
+    renderAchievements();
+
+
+    renderMemories();
+
+
+    saveGame();
+
+
+}
+
+
+
+//====================================================
+//              APPLICATION BOOT
+//====================================================
+
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    ()=>{
+
+
+        finalSync();
+
+
+
+        setTimeout(
+
+            ()=>{
+
+
+                hideLoadingScreen();
+
+
+
+            },
+
+            1000
+
+        );
+
+
+
+        systemOnline();
+
+
+
+    }
+
+);
+       
+
