@@ -2767,4 +2767,1488 @@ function refreshAchievements(){
 //====================================================
 //          AUTO LOAD
 //====================================================
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    ()=>{
+
+
+        renderAchievements();
+
+
+    }
+
+);
+/*====================================================
+            LIFEQUEST v1.0
+
+            Part 5A
+            Memory Vault Engine
+====================================================*/
+
+
+//====================================================
+//              CREATE MEMORY
+//====================================================
+
+
+function addMemory(data){
+
+
+    const memory = {
+
+
+        id:
+
+            Date.now(),
+
+
+
+        title:
+
+            data.title || "Untitled Memory",
+
+
+
+        description:
+
+            data.description || "",
+
+
+
+        image:
+
+            data.image || "",
+
+
+
+        date:
+
+            new Date()
+
+            .toLocaleDateString(),
+
+
+
+        questID:
+
+            data.questID || null,
+
+
+
+        xpEarned:
+
+            data.xpEarned || 0
+
+
+
+    };
+
+
+
+    LifeQuest.memories.push(
+
+        memory
+
+    );
+
+
+
+    saveGame();
+
+
+
+    renderMemories();
+
+
+
+    return memory;
+
+
+}
+
+
+
+//====================================================
+//              MEMORY CONTAINER
+//====================================================
+
+
+function getMemoryContainer(){
+
+
+    return document.querySelector(
+
+        "#memoryContainer"
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              RENDER MEMORIES
+//====================================================
+
+
+function renderMemories(){
+
+
+    const container =
+
+        getMemoryContainer();
+
+
+
+    if(!container)
+
+        return;
+
+
+
+    container.innerHTML = "";
+
+
+
+    if(
+
+        LifeQuest.memories.length === 0
+
+    ){
+
+
+        container.innerHTML = `
+
+
+        <div class="empty-state glass">
+
+
+            <i class="fa-solid fa-book-open"></i>
+
+
+            <h2>
+
+            No Memories Yet
+
+            </h2>
+
+
+            <p>
+
+            Complete quests to create your story archive.
+
+            </p>
+
+
+        </div>
+
+
+        `;
+
+
+        return;
+
+    }
+
+
+
+
+    LifeQuest.memories.forEach(
+
+        memory => {
+
+
+
+            const card =
+
+            document.createElement(
+
+                "div"
+
+            );
+
+
+
+            card.className =
+
+            "memory-card glass";
+
+
+
+            card.innerHTML = `
+
+
+            ${
+
+            memory.image ?
+
+            `
+
+            <img
+
+            class="memory-image"
+
+            src="${memory.image}">
+
+            `
+
+            :
+
+            ""
+
+            }
+
+
+
+            <div class="memory-body">
+
+
+                <h2 class="memory-title">
+
+
+                ${memory.title}
+
+
+                </h2>
+
+
+
+
+                <p class="memory-notes">
+
+
+                ${memory.description}
+
+
+                </p>
+
+
+
+
+                <div class="memory-meta">
+
+
+                    <span class="memory-date">
+
+
+                    📅 ${memory.date}
+
+
+                    </span>
+
+
+
+                    <span class="memory-xp">
+
+
+                    ⚡ +${memory.xpEarned} XP
+
+
+                    </span>
+
+
+
+                </div>
+
+
+            </div>
+
+
+            `;
+
+
+
+            container.appendChild(card);
+
+
+
+        }
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              MEMORY COUNT
+//====================================================
+
+
+function getMemoryCount(){
+
+
+    return LifeQuest.memories.length;
+
+
+}
+
+
+
+//====================================================
+//              LOAD MEMORY VAULT
+//====================================================
+
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    ()=>{
+
+
+        renderMemories();
+
+
+    }
+
+);
+/*====================================================
+            LIFEQUEST v1.0
+
+            Part 5B
+            Memory Vault Expansion
+====================================================*/
+
+
+//====================================================
+//          CREATE MEMORY FROM QUEST
+//====================================================
+
+
+function createMemoryFromQuest(quest){
+
+
+    const alreadyExists =
+
+    LifeQuest.memories.some(
+
+        memory =>
+
+        memory.questID === quest.id
+
+    );
+
+
+
+    if(alreadyExists)
+
+        return;
+
+
+
+    addMemory({
+
+
+
+        title:
+
+            quest.title,
+
+
+
+        description:
+
+            quest.description,
+
+
+
+        image:
+
+            quest.image,
+
+
+
+        questID:
+
+            quest.id,
+
+
+
+        xpEarned:
+
+            getQuestReward(
+
+                quest.priority
+
+            )
+
+
+
+    });
+
+
+}
+
+
+
+//====================================================
+//          FAVORITE MEMORY
+//====================================================
+
+
+function toggleMemoryFavorite(id){
+
+
+    const memory =
+
+    LifeQuest.memories.find(
+
+        item =>
+
+        item.id === id
+
+    );
+
+
+
+    if(!memory)
+
+        return;
+
+
+
+    memory.favorite =
+
+        !memory.favorite;
+
+
+
+    saveGame();
+
+
+
+    renderMemories();
+
+
+
+    showToast(
+
+        memory.favorite ?
+
+        "⭐ Memory saved"
+
+        :
+
+        "Removed from favorites"
+
+    );
+
+
+}
+
+
+
+//====================================================
+//          DELETE MEMORY
+//====================================================
+
+
+function deleteMemory(id){
+
+
+    LifeQuest.memories =
+
+    LifeQuest.memories.filter(
+
+        memory =>
+
+        memory.id !== id
+
+    );
+
+
+
+    saveGame();
+
+
+
+    renderMemories();
+
+
+
+    showToast(
+
+        "📜 Memory removed"
+
+    );
+
+
+}
+
+
+
+//====================================================
+//          SORT MEMORIES
+//====================================================
+
+
+function sortMemories(){
+
+
+    LifeQuest.memories.sort(
+
+        (a,b)=>
+
+        b.id-a.id
+
+    );
+
+
+
+}
+
+
+
+//====================================================
+//          ENHANCED MEMORY RENDER
+//====================================================
+
+
+function refreshMemoryVault(){
+
+
+    sortMemories();
+
+
+    renderMemories();
+
+
+}
+
+
+
+//====================================================
+//          AUTO REFRESH
+//====================================================
+
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    ()=>{
+
+
+        refreshMemoryVault();
+
+
+    }
+
+);
+/*====================================================
+            LIFEQUEST v1.0
+
+            Part 6A
+            Companion UI Controls
+====================================================*/
+
+
+//====================================================
+//              OPEN COMPANION MODAL
+//====================================================
+function openCompanionModal(){
+
+
+    const modal = document.querySelector(
+
+        "#companionModal"
+
+    );
+
+
+
+    if(modal){
+
+        modal.showModal();
+
+    }
+
+
+}
+
+
+
+//====================================================
+//              CLOSE COMPANION MODAL
+//====================================================
+
+
+function closeCompanionModal(){
+
+
+    const modal = document.querySelector(
+
+        "#companionModal"
+
+    );
+
+
+
+    if(modal){
+
+        modal.close();
+
+    }
+
+
+}
+
+
+
+//====================================================
+//              COMPANION FORM
+//====================================================
+
+
+function setupCompanionForm(){
+
+
+    const form = document.querySelector(
+
+        "#companionForm"
+
+    );
+
+
+
+    if(!form)
+
+        return;
+
+
+
+    form.addEventListener(
+
+        "submit",
+
+        (event)=>{
+
+
+            event.preventDefault();
+
+
+
+            const data =
+
+            new FormData(form);
+
+
+
+            createCompanion({
+
+
+
+                name:
+
+                data.get("name"),
+
+
+
+                role:
+
+                data.get("role"),
+
+
+
+                notes:
+
+                data.get("notes"),
+
+
+
+                image:
+
+                data.get("image")
+
+
+
+            });
+
+
+
+            form.reset();
+
+
+
+            closeCompanionModal();
+
+
+
+            showToast(
+
+                "🤝 Companion Added"
+
+            );
+
+
+        }
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              CONNECT BUTTON
+//====================================================
+
+
+function setupCompanionButton(){
+
+
+    const button = document.querySelector(
+
+        "#addAllyBtn"
+
+    );
+
+
+
+    if(button){
+
+
+        button.addEventListener(
+
+            "click",
+
+            openCompanionModal
+
+        );
+
+
+    }
+
+
+}
+
+
+
+//====================================================
+//              START COMPANION UI
+//====================================================
+
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    ()=>{
+
+
+        setupCompanionButton();
+
+
+        setupCompanionForm();
+
+
+    }
+
+);
+/*====================================================
+            LIFEQUEST v1.0
+
+            Part 6B
+            Companion Quest Assignment UI
+====================================================*/
+
+
+//====================================================
+//          COMPANION SELECT OPTIONS
+//====================================================
+
+
+function generateCompanionOptions(){
+
+
+    let options = "";
+
+
+
+    LifeQuest.companions.forEach(
+
+        companion => {
+
+
+            options += `
+
+            <option value="${companion.id}">
+
+            ${companion.name}
+
+            (${companion.role})
+
+            </option>
+
+            `;
+
+
+        }
+
+    );
+
+
+
+    return options;
+
+
+}
+
+
+
+//====================================================
+//          LOAD COMPANION SELECT
+//====================================================
+
+
+function loadCompanionSelector(){
+
+
+    const selector = document.querySelector(
+
+        "#companionSelector"
+
+    );
+
+
+
+    if(!selector)
+
+        return;
+
+
+
+    selector.innerHTML =
+
+    generateCompanionOptions();
+
+
+
+}
+
+
+
+//====================================================
+//          ASSIGN FROM UI
+//====================================================
+
+
+function assignSelectedCompanion(){
+
+
+    const questSelect = document.querySelector(
+
+        "#questSelector"
+
+    );
+
+
+
+    const companionSelect = document.querySelector(
+
+        "#companionSelector"
+
+    );
+
+
+
+    if(
+
+        !questSelect ||
+
+        !companionSelect
+
+    )
+
+        return;
+
+
+
+    const questID =
+
+        Number(
+
+            questSelect.value
+
+        );
+
+
+
+    const companionID =
+
+        Number(
+
+            companionSelect.value
+
+        );
+
+
+
+    assignCompanionToQuest(
+
+        questID,
+
+        companionID
+
+    );
+
+
+}
+
+
+
+//====================================================
+//          QUEST OPTIONS
+//====================================================
+
+
+function generateQuestOptions(){
+
+
+    let options = "";
+
+
+
+    LifeQuest.quests.forEach(
+
+        quest => {
+
+
+
+            options += `
+
+
+            <option value="${quest.id}">
+
+            ${quest.title}
+
+            </option>
+
+
+            `;
+
+
+        }
+
+    );
+
+
+
+    return options;
+
+
+}
+
+
+
+//====================================================
+//          LOAD QUEST SELECT
+//====================================================
+
+
+function loadQuestSelector(){
+
+
+    const selector = document.querySelector(
+
+        "#questSelector"
+
+    );
+
+
+
+    if(!selector)
+
+        return;
+
+
+
+    selector.innerHTML =
+
+        generateQuestOptions();
+
+
+}
+
+
+
+//====================================================
+//          REFRESH PARTY SYSTEM
+//====================================================
+
+
+function refreshPartySystem(){
+
+
+    loadCompanionSelector();
+
+
+    loadQuestSelector();
+
+
+}
+
+
+
+//====================================================
+//          START PARTY UI
+//====================================================
+
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    ()=>{
+
+
+        refreshPartySystem();
+
+
+    }
+
+);
+
+/*====================================================
+            LIFEQUEST v1.0
+
+            Part 7A
+            UI Control Center
+====================================================*/
+
+
+//====================================================
+//              TOAST SYSTEM
+//====================================================
+
+
+function showToast(message){
+
+
+    const toast = document.querySelector(
+
+        "#toast"
+
+    );
+
+
+
+    if(!toast)
+
+        return;
+
+
+
+    toast.textContent = message;
+
+
+
+    toast.classList.add(
+
+        "show"
+
+    );
+
+
+
+    setTimeout(
+
+        ()=>{
+
+
+            toast.classList.remove(
+
+                "show"
+
+            );
+
+
+        },
+
+        3000
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              CLOSE MODALS
+//====================================================
+
+
+function setupModalCloseButtons(){
+
+
+    const closeButtons = document.querySelectorAll(
+
+        ".close-modal"
+
+    );
+
+
+
+    closeButtons.forEach(
+
+        button => {
+
+
+
+            button.addEventListener(
+
+                "click",
+
+                ()=>{
+
+
+                    const modal =
+
+                    button.closest(
+
+                        "dialog"
+
+                    );
+
+
+
+                    if(modal)
+
+                        modal.close();
+
+
+
+                }
+
+            );
+
+
+        }
+
+    );
+
+
+}
+
+
+
+//====================================================
+//          CLICK OUTSIDE MODAL CLOSE
+//====================================================
+
+
+function setupOutsideModalClose(){
+
+
+    const modals = document.querySelectorAll(
+
+        "dialog"
+
+    );
+
+
+
+    modals.forEach(
+
+        modal => {
+
+
+
+            modal.addEventListener(
+
+                "click",
+
+                (event)=>{
+
+
+                    const box =
+
+                    modal.querySelector(
+
+                        ".modal-content"
+
+                    );
+
+
+
+                    if(
+
+                        box &&
+
+                        !box.contains(
+
+                            event.target
+
+                        )
+
+                    ){
+
+
+                        modal.close();
+
+
+                    }
+
+
+                }
+
+            );
+
+
+        }
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              DELETE CONFIRMATION
+//====================================================
+
+
+function confirmAction(
+
+    message,
+
+    callback
+
+){
+
+
+    const result = confirm(
+
+        message
+
+    );
+
+
+
+    if(result){
+
+
+        callback();
+
+
+    }
+
+
+}
+
+
+
+//====================================================
+//              BUTTON RIPPLE SUPPORT
+//====================================================
+
+
+function setupButtonEffects(){
+
+
+    const buttons = document.querySelectorAll(
+
+        "button"
+
+    );
+
+
+
+    buttons.forEach(
+
+        button => {
+
+
+
+            button.addEventListener(
+
+                "click",
+
+                ()=>{
+
+
+                    button.classList.add(
+
+                        "clicked"
+
+                    );
+
+
+
+                    setTimeout(
+
+                        ()=>{
+
+
+                            button.classList.remove(
+
+                                "clicked"
+
+                            );
+
+
+                        },
+
+                        200
+
+                    );
+
+
+                }
+
+            );
+
+
+        }
+
+    );
+
+
+}
+
+
+
+//====================================================
+//              UI INITIALIZER
+//====================================================
+
+
+function initializeUI(){
+
+
+    setupModalCloseButtons();
+
+
+    setupOutsideModalClose();
+
+
+    setupButtonEffects();
+
+
+}
+
+
+
+//====================================================
+//              START UI ENGINE
+//====================================================
+
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    ()=>{
+
+
+        initializeUI();
+
+
+    }
+
+);
+/*====================================================
+            LIFEQUEST v1.0
+
+            Part 7B
+            Celebration Engine
+====================================================*/
+
+
+//====================================================
+//              CONFETTI SYSTEM
+//====================================================
+
+
+function launchConfetti(){
+
+
+    const canvas = document.querySelector(
+
+        "#confettiCanvas"
+
+    );
+
+
+
+    if(!canvas)
+
+        return;
+
+
+
+    const ctx = canvas.getContext(
+
+        "2d"
+
+    );
+
+
+
+    canvas.width = window.innerWidth;
+
+    canvas.height = window.innerHeight;
+
+
+
+    let particles = [];
+
+
+
+    for(
+
+        let i = 0;
+
+        i < 120;
+
+        i++
+
+    ){
+
+
+        particles.push({
+
+
+            x:
+
+            Math.random()
+
+            *
+
+            canvas.width,
+
+
+
+            y:
+
+            -20,
+
+
+
+            size:
+
+            Math.random()
+
+            *
+
+            8 + 4,
+
+
+
+            speed:
+
+            Math.random()
+
+            *
+
+            4 + 2,
+
 
