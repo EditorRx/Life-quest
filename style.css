@@ -1385,3 +1385,467 @@ body{
 
     background:
       
+linear-gradient(
+            135deg,
+            var(--cyan),
+            var(--purple)
+        );
+
+    color:white;
+
+    font-weight:600;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    box-shadow:0 0 18px rgba(0,247,255,.18);
+
+}
+
+#addQuestBtn:hover,
+#newQuestTopBtn:hover,
+#saveProfileBtn:hover,
+.main-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 0 20px rgba(0,247,255,.35),
+        0 0 35px rgba(168,85,247,.25);
+
+}
+
+/*====================================================
+                SECONDARY BUTTON
+====================================================*/
+
+.secondary-btn{
+
+    padding:14px 20px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.06);
+
+    color:white;
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+.secondary-btn:hover{
+
+    background:rgba(255,255,255,.1);
+
+    border-color:rgba(0,247,255,.3);
+
+}
+
+/*====================================================
+                DANGER BUTTON
+====================================================*/
+
+.danger-btn{
+
+    padding:14px 20px;
+
+    border-radius:16px;
+
+    background:rgba(239,68,68,.12);
+
+    color:#ff8a8a;
+
+    border:1px solid rgba(239,68,68,.25);
+
+}
+
+.danger-btn:hover{
+
+    background:rgba(239,68,68,.22);
+
+    color:white;
+
+}
+
+/*====================================================
+                PAGE CONTAINER
+====================================================*/
+
+#pageContainer{
+
+    flex:1;
+
+}
+
+/*====================================================
+                RESPONSIVE
+====================================================*/
+
+@media(max-width:950px){
+
+    .main-content{
+
+        margin-left:90px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .main-content{
+
+        margin-left:0;
+
+        padding:18px;
+
+    }
+
+    .topbar{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        padding:20px;
+
+    }
+
+    .topbar-right{
+
+        width:100%;
+
+        flex-wrap:wrap;
+
+    }
+              .search-box{
+
+        width:100%;
+
+    }
+
+    #addQuestBtn{
+
+        width:100%;
+
+        justify-content:center;
+
+    }
+
+}
+/*====================================================
+                    DASHBOARD
+                    PART 2A
+====================================================*/
+
+/* Dashboard Layout */
+
+.player-dashboard{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:24px;
+
+    margin-bottom:30px;
+
+}
+
+/*====================================================
+                PLAYER PROFILE
+====================================================*/
+
+.player-profile{
+
+    padding:28px;
+
+    border-radius:24px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:24px;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.player-profile::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        radial-gradient(
+            circle at top right,
+            rgba(0,247,255,.10),
+            transparent 55%
+        );
+
+    pointer-events:none;
+
+}
+
+.profile-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.avatar{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            var(--purple),
+            var(--cyan)
+        );
+
+    font-size:42px;
+
+    color:#fff;
+
+    box-shadow:
+
+        0 0 25px rgba(0,247,255,.25);
+
+}
+
+.profile-info small{
+
+    color:var(--cyan);
+
+    letter-spacing:2px;
+
+    font-size:12px;
+
+}
+.profile-info h1{
+
+    margin:8px 0;
+
+    font-size:34px;
+
+}
+
+.rank-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    padding:8px 16px;
+
+    border-radius:999px;
+
+    background:
+
+        rgba(255,200,87,.12);
+
+    border:1px solid rgba(255,200,87,.25);
+
+    color:var(--gold);
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+/*====================================================
+                    LEVEL
+====================================================*/
+
+.level-card{
+
+    width:120px;
+
+    height:120px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(0,247,255,.15),
+            rgba(168,85,247,.15)
+        );
+
+    border:2px solid rgba(255,255,255,.08);
+
+    box-shadow:
+
+        0 0 30px rgba(0,247,255,.18);
+
+}
+
+.level-card small{
+
+    color:var(--text-light);
+
+    font-size:12px;
+
+    letter-spacing:2px;
+
+}
+
+.level-card h2{
+
+    margin-top:8px;
+
+    font-size:42px;
+
+    color:var(--cyan);
+
+    text-shadow:
+
+        0 0 18px rgba(0,247,255,.4);
+
+}
+
+/*====================================================
+                    XP CARD
+====================================================*/
+
+.xp-card{
+
+    padding:24px;
+
+    border-radius:24px;
+
+}
+
+.xp-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+    font-size:14px;
+
+}
+
+.xp-header span:last-child{
+
+    color:var(--cyan);
+
+}
+
+.xp-bar{
+
+    height:18px;
+
+    border-radius:999px;
+
+    overflow:hidden;
+
+    background:
+
+        rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.06);
+
+}
+
+.xp-fill{
+
+    width:0%;
+
+    height:100%;
+
+    border-radius:999px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            var(--purple),
+            var(--cyan)
+        );
+
+    transition:width .6s ease;
+
+    box-shadow:
+
+        0 0 18px rgba(0,247,255,.35);
+
+}
+
+/*====================================================
+                    STATS GRID
+====================================================*/
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+
+        repeat(auto-fit,minmax(220px,1fr));
+
+    gap:22px;
+
+}
+
+.stat-card{
+
+    padding:28px;
+
+    border-radius:22px;
+
+    text-align:center;
+
+    transition:var(--transition);
+
+}
+
+.stat-card:hover{
+
+    transform:
+
+        translateY(-8px);
+
+    box-shadow:
