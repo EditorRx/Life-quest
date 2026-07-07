@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- ==========================================
+         META
+    =========================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="theme-color"
+        content="#090b16">
+
+    <meta
+        name="description"
+        content="LifeQuest | Turn your dreams into legendary quests.">
+
+    <title>⚡ LifeQuest | Maverix</title>
+
+    <!-- ==========================================
+         GOOGLE FONTS
+    =========================================== -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- ==========================================
+         FONT AWESOME
+    =========================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- ==========================================
+         CSS
+    =========================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css">
+
+</head>
+
+<body>
+
+    <!-- ==========================================
+         LOADING SCREEN
+    =========================================== -->
+
+    <div id="loadingScreen">
+
+        <div class="loader-box">
+
+            <h1 class="loader-title">
+                LIFE QUEST
+            </h1>
+
+            <p class="loader-player">
+                PLAYER :
+                <span>Maverix</span>
+            </p>
+
+            <div class="loader-bar">
+
+                <div class="loader-fill"></div>
+
+            </div>
+
+            <p class="loader-status">
+
+                Initializing Adventure...
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+         CYBERPUNK BACKGROUND
+    =========================================== -->
+
+    <div class="background-grid"></div>
+
+    <div class="background-glow glow-one"></div>
+
+    <div class="background-glow glow-two"></div>
+
+    <div class="background-noise"></div>
+
+    <!-- ==========================================
+         PARTICLES
+    =========================================== -->
+
+    <div id="particles"></div>
+
+    <!-- ==========================================
+         MAIN APP STARTS HERE
+    =========================================== -->
+
+    <div id="app">
+            <!-- ==========================================
+         SIDEBAR
+    =========================================== -->
+
+    <aside class="sidebar">
+
+        <!-- Logo -->
+
+        <div class="logo-section">
+
+            <div class="logo-icon">
+                <i class="fa-solid fa-gamepad"></i>
+            </div>
+
+            <div class="logo-text">
+
+                <h1>LIFEQUEST</h1>
+
+                <p>Every Dream is a Quest</p>
+
+            </div>
+
+        </div>
+
+        <!-- Player Card -->
+
+        <div class="player-card glass">
+
+            <div class="player-avatar">
+
+                <i class="fa-solid fa-user-astronaut"></i>
+
+            </div>
+
+            <div class="player-details">
+
+                <h2 id="playerName">
+                    Maverix
+                </h2>
+
+                <span class="player-rank">
+                    Dream Chaser
+                </span>
+
+            </div>
+
+            <div class="player-level">
+
+                <span>LV</span>
+
+                <strong id="playerLevel">
+                    1
+                </strong>
+
+            </div>
+
+        </div>
+
+        <!-- Navigation -->
+
+        <nav class="sidebar-nav">
+
+            <button
+                class="nav-btn active"
+                data-page="dashboard">
+
+                <i class="fa-solid fa-house"></i>
+
+                <span>Dashboard</span>
+
+            </button>
+
+            <button
+                class="nav-btn"
+                data-page="quests">
+
+                <i class="fa-solid fa-list-check"></i>
+
+                <span>Quests</span>
+
+            </button>
+
+            <button
+                class="nav-btn"
+                data-page="favorites">
+
+                <i class="fa-solid fa-star"></i>
+
+                <span>Favorites</span>
+
+            </button>
+
+            <button
+                class="nav-btn"
+                data-page="allies">
+
+                <i class="fa-solid fa-user-group"></i>
+
+                <span>Allies</span>
+
+            </button>
+
+            <button
+                class="nav-btn"
+                data-page="achievements">
+
+                <i class="fa-solid fa-trophy"></i>
+
+                <span>Achievements</span>
+
+            </button>
+
+            <button
+                class="nav-btn"
+                data-page="memory">
+
+                <i class="fa-solid fa-book"></i>
+
+                <span>Memory Vault</span>
+
+            </button>
+
+            <button
+                class="nav-btn"
+                data-page="settings">
+
+                <i class="fa-solid fa-gear"></i>
+
+                <span>Settings</span>
+
+            </button>
+
+        </nav>
+
+        <!-- Sidebar Footer -->
+
+        <div class="sidebar-footer">
+
+            <div class="daily-quote glass">
+
+                <small>
+                    Today's Transmission
+                </small>
+
+                <p id="dailyQuote">
+
+                    "Every legend begins with one decision."
+
+                </p>
+
+            </div>
+
+            <div class="version">
+
+                LifeQuest v1.0
+
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- ==========================================
+         MAIN CONTENT
+    =========================================== -->
+
+    <main class="main-content">
+            <!-- ==========================================
+         TOPBAR
+    =========================================== -->
+
+    <header class="topbar glass">
+
+        <div class="topbar-left">
+
+            <h1 id="pageTitle">
+                Dashboard
+            </h1>
+
+            <p id="pageSubtitle">
+                Welcome back, Maverix. Your next quest awaits.
+            </p>
+
+        </div>
+
+        <div class="topbar-right">
+
+            <!-- Search -->
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="globalSearch"
+                    placeholder="Search quests, allies...">
+
+            </div>
+
+            <!-- Notifications -->
+
+            <button
+                class="icon-btn"
+                id="notificationBtn">
+
+                <i class="fa-solid fa-bell"></i>
+
+                <span class="notification-dot"></span>
+
+            </button>
+
+            <!-- Add Quest -->
+
+            <button
+                id="addQuestBtn">
+
+                <i class="fa-solid fa-plus"></i>
+
+                <span>New Quest</span>
+
+            </button>
+
+        </div>
+
+    </header>
+
+    <!-- ==========================================
+         PAGE CONTAINER
+    =========================================== -->
+
+    <div id="pageContainer">
+
+        <!-- ==========================
+             DASHBOARD PAGE
+        =========================== -->
+
+        <section
+            id="dashboard"
+            class="page active-page">
+                    <!-- ==========================================
+             PLAYER PROFILE
+        =========================================== -->
+
+        <section class="player-dashboard">
+
+            <div class="player-profile glass">
+
+                <div class="profile-left">
+
+                    <div class="avatar">
+
+                        <i class="fa-solid fa-user-astronaut"></i>
+
+                    </div>
+
+                    <div class="profile-info">
+
+                        <small>PLAYER</small>
+
+                        <h1 id="dashboardPlayerName">
+                            Maverix
+                        </h1>
+
+                        <span class="rank-badge">
+
+                            Dream Chaser
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="profile-right">
+
+                    <div class="level-card">
+
+                        <small>LEVEL</small>
+
+                        <h2 id="levelNumber">
+
+                            1
+
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- XP -->
+
+            <div class="xp-card glass">
+
+                <div class="xp-header">
+
+                    <span>Experience</span>
+
+                    <span id="xpText">
+
+                        0 / 1000 XP
+
+                    </span>
+
+                </div>
+
+                <div class="xp-bar">
+
+                    <div
+                        class="xp-fill"
+                        id="xpFill">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+             QUICK STATS
+        =========================================== -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card glass">
+
+                <i class="fa-solid fa-list-check"></i>
+
+                <h2 id="totalQuestCount">
+
+                    0
+
+                </h2>
+
+                <p>
+
+                    Total Quests
+
+                </p>
+
+            </div>
+
+            <div class="stat-card glass">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                <h2 id="completedQuestCount">
+
+                    0
+
+                </h2>
+
+                <p>
+
+                    Completed
+
+                </p>
+
+            </div>
+
+            <div class="stat-card glass">
+
+                <i class="fa-solid fa-star"></i>
+
+                <h2 id="favoriteQuestCount">
+
+                    0
+
+                </h2>
+
+                <p>
+
+                    Favorites
+
+                </p>
+
+            </div>
+
+            <div class="stat-card glass">
+
+                <i class="fa-solid fa-trophy"></i>
+
+                <h2 id="achievementTotal">
+
+                    0
+
+                </h2>
+
+                <p>
+
+                    Achievements
+
+                </p>
+
+            </div>
+
+        </section>
+                <!-- ==========================================
+             MAIN MISSION
+        =========================================== -->
+
+        <section class="main-mission">
+
+            <div class="glass mission-card">
+
+                <div class="mission-header">
+
+                    <div>
+
+                        <small>CURRENT MAIN QUEST</small>
+
+                        <h2 id="mainQuestTitle">
+
+                            No Main Quest Selected
+
+                        </h2>
+
+                    </div>
+
+                    <span
+                        id="mainQuestPriority"
+                        class="priority legendary">
+
+                        Legendary
+
+                    </span>
+
+                </div>
+
+                <p id="mainQuestDescription">
+
+                    Select one of your quests as your Main Mission.
+                    It will always stay on your dashboard.
+
+                </p>
+
+                <div class="mission-progress">
+
+                    <div class="progress-header">
+
+                        <span>Mission Progress</span>
+
+                        <span id="mainMissionPercent">
+
+                            0%
+
+                        </span>
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div
+                            id="mainMissionFill"
+                            class="progress-fill">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="mission-footer">
+
+                    <button
+                        id="continueMission">
+
+                        <i class="fa-solid fa-play"></i>
+
+                        Continue Mission
+
+                    </button>
+
+                    <button
+                        class="secondary-btn"
+                        id="changeMission">
+
+                        <i class="fa-solid fa-repeat"></i>
+
+                        Change Mission
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+             RECENT ACTIVITY
+        =========================================== -->
+
+        <section class="dashboard-row">
+
+            <div class="glass activity-card">
+
+                <div class="section-title">
+
+                    <h2>
+
+                        Recent Activity
+
+                    </h2>
+
+                </div>
+
+                <ul
+                    id="activityFeed"
+                    class="activity-list">
+
+                    <li>
+
+                        Welcome to LifeQuest,
+                        <strong>Maverix</strong>.
+
+                    </li>
+
+                    <li>
+
+                        Create your first quest to begin your adventure.
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="glass quick-actions">
+
+                <div class="section-title">
+
+                    <h2>
+
+                        Quick Actions
+
+                    </h2>
+
+                </div>
+
+                <button
+                    id="quickNewQuest">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    New Quest
+
+                </button>
+
+                <button
+                    id="quickNewAlly">
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                    Recruit Ally
+
+                </button>
+
+                <button
+                    id="quickAchievements">
+
+                    <i class="fa-solid fa-trophy"></i>
+
+                    View Achievements
+
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- End Dashboard -->
+
+        </section>
+                <!-- ==========================================
+             QUESTS PAGE
+        =========================================== -->
+
+        <section
+            id="quests"
+            class="page">
+
+            <!-- Quest Command Center -->
+
+            <div class="quest-command glass">
+
+                <div class="command-left">
+
+                    <h1>Quest Database</h1>
+
+                    <p>
+                        Manage every mission in your journey.
+                    </p>
+
+                </div>
+
+                <div class="command-right">
+
+                    <button id="newQuestTopBtn">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        <span>New Quest</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- Search & Filters -->
+
+            <div class="quest-toolbar glass">
+
+                <div class="toolbar-search">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        id="questSearch"
+                        placeholder="Search quests...">
+
+                </div>
+
+                <select id="categoryFilter">
+
+                    <option value="all">
+                        All Categories
+                    </option>
+
+                    <option value="travel">
+                        🌍 Travel
+                    </option>
+
+                    <option value="education">
+                        📚 Education
+                    </option>
+
+                    <option value="career">
+                        💼 Career
+                    </option>
+
+                    <option value="fitness">
+                        💪 Fitness
+                    </option>
+
+                    <option value="health">
+                        ❤️ Health
+                    </option>
+
+                    <option value="finance">
+                        💰 Finance
+                    </option>
+
+                    <option value="adventure">
+                        🧗 Adventure
+                    </option>
+
+                    <option value="technology">
+                        💻 Technology
+                    </option>
+
+                    <option value="dream">
+                        ✨ Dreams
+                    </option>
+
+                    <option value="gaming">
+                        🎮 Gaming
+                    </option>
+
+                    <option value="custom">
+                        Custom
+                    </option>
+
+                </select>
+
+                <select id="priorityFilter">
+
+                    <option value="all">
+                        All Priorities
+                    </option>
+
+                    <option value="common">
+                        🟢 Common
+                    </option>
+
+                    <option value="rare">
+                        🔵 Rare
+                    </option>
+
+                    <option value="epic">
+                        🟣 Epic
+                    </option>
+
+                    <option value="legendary">
+                        🟠 Legendary
+                    </option>
+
+                </select>
+
+                <select id="sortQuest">
+
+                    <option value="newest">
+                        Newest First
+                    </option>
+
+                    <option value="oldest">
+                        Oldest First
+                    </option>
+
+                    <option value="progress">
+                        Progress
+                    </option>
+
+                    <option value="alphabet">
+                        A-Z
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Quest Grid -->
+
+            <div
+                id="questContainer"class="quest-grid">
+
+            </div>
+                        <!-- ==========================================
+                 QUEST TEMPLATE
+                 Hidden - Used by JavaScript
+            =========================================== -->
+
+            <template id="questTemplate">
+
+                <article class="quest-card glass">
+
+                    <!-- Quest Image -->
+
+                    <div class="quest-image">
+
+                        <img
+                            class="quest-img"
+                            src=""
+                            alt="Quest Image">
+
+                        <button
+                            class="favorite-btn"
+                            title="Favorite">
+
+                            <i class="fa-regular fa-star"></i>
+
+                        </button>
+
+                    </div>
+
+                    <!-- Quest Body -->
+
+                    <div class="quest-body">
+
+                        <div class="quest-top">
+
+                            <span class="priority-badge common">
+
+                                Common
+
+                            </span>
+
+                            <span class="category-badge">
+
+                                Category
+
+                            </span>
+
+                        </div>
+
+                        <h2 class="quest-title">
+
+                            Quest Title
+
+                        </h2>
+
+                        <p class="quest-description">
+
+                            Description goes here...
+
+                        </p>
+
+                        <!-- Progress -->
+
+                        <div class="quest-progress">
+
+                            <div class="progress-info">
+
+                                <span>Progress</span>
+
+                                <span class="progress-text">
+
+                                    0%
+
+                                </span>
+
+                           </div>
+
+                            <div class="progress-bar">
+
+                                <div
+                                    class="progress-fill">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Allies -->
+
+                        <div class="quest-allies">
+
+                            <strong>
+
+                                Allies
+
+                            </strong>
+
+                            <div class="ally-tags">
+
+                                <!-- Generated dynamically -->
+
+                            </div>
+
+                        </div>
+
+                        <!-- Notes -->
+
+                        <div class="quest-notes">
+
+                            <strong>
+
+                                Notes
+
+                            </strong>
+
+                            <p class="notes-text">
+
+                                No notes yet.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+
+                    <div class="quest-footer">
+
+                        <button
+                            class="main-btn complete-btn">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Complete
+
+                        </button>
+
+                        <button
+                            class="secondary-btn edit-btn">
+
+                            <i class="fa-solid fa-pen"></i>
+
+                            Edit
+
+                        </button>
+
+                        <button
+                            class="danger-btn delete-btn">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                            Abandon
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </template>
+
+        </section>
+                <!-- ==========================================
+             FAVORITES PAGE
+        =========================================== -->
+
+        <section
+            id="favorites"
+            class="page">
+
+            <!-- Header -->
+
+            <div class="page-header glass">
+
+                <div>
+
+                    <h1>⭐ Hall of Legends</h1>
+
+                    <p>
+
+                        Your most important quests.
+
+                    </p>
+
+                </div>
+
+                <div class="header-badge">
+
+                    <span id="favoriteCounter">
+
+                        0 Favorites
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- Favorites Grid -->
+
+            <div
+                id="favoriteContainer"
+                class="quest-grid">
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+             ALLIES PAGE
+        =========================================== -->
+
+        <section
+            id="allies"
+            class="page">
+
+            <!-- Header -->
+
+            <div class="page-header glass">
+
+                <div>
+
+                    <h1>🤝 Hall of Allies</h1>
+
+                    <p>
+
+                        The people who help you complete your journey.
+
+                    </p>
+
+                </div>
+
+                <button
+                    id="addAllyBtn">
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                    Recruit Ally
+
+                </button>
+
+            </div>
+
+            <!-- Allies Grid -->
+
+            <div
+                id="allyContainer"
+                class="ally-grid">
+
+            </div>
+
+            <!-- Ally Template -->
+
+            <template id="allyTemplate">
+
+                <article class="ally-card glass">
+
+                    <div class="ally-top">
+
+                        <img
+                            class="ally-image"
+                            src=""
+                            alt="Ally">
+
+                        <div>
+
+                            <h2 class="ally-name">
+
+                                Ally Name
+
+                            </h2>
+
+                            <span class="ally-role">
+
+                                Role
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="ally-body">
+
+                        <p class="ally-notes">
+
+                            Notes...
+
+                        </p>
+
+                    </div>
+
+                    <div class="ally-stats">
+
+                        <span>
+
+                            🎯 Quests:
+                            <strong class="allyQuestCount">
+
+                                0
+
+                            </strong>
+
+                        </span>
+
+                    </div>
+
+                    <div class="ally-footer">
+
+                        <button
+                            class="secondary-btn edit-ally">
+
+                            <i class="fa-solid fa-pen"></i>
+
+                            Edit
+
+                        </button>
+
+                        <button
+                            class="danger-btn remove-ally">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                            Remove
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </template>
+
+        </section>
+        
+                <!-- ==========================================
+             ACHIEVEMENTS PAGE
+        =========================================== -->
+
+        <section
+            id="achievements"
+            class="page">
+
+            <div class="page-header glass">
+
+                <div>
+
+                    <h1>🏆 Achievement Hall</h1>
+
+                    <p>
+                        Every milestone you've unlocked.
+                    </p>
+
+                </div>
+
+                <div class="header-badge">
+
+                    <span id="achievementCount">
+
+                        0 Unlocked
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div
+                id="achievementContainer"
+                class="achievement-grid">
+
+            </div>
+
+            <!-- Achievement Template -->
+
+            <template id="achievementTemplate">
+
+                <article class="achievement-card glass">
+
+                    <div class="achievement-icon">
+
+                        🏆
+
+                    </div>
+
+                    <div class="achievement-info">
+
+                        <h2 class="achievement-title">
+
+                            Achievement
+
+                        </h2>
+                        
+                                <!-- ==========================================
+             SETTINGS PAGE
+        =========================================== -->
+
+        <section
+            id="settings"
+            class="page">
+
+            <div class="page-header glass">
+
+                <div>
+
+                    <h1>⚙ Mission Control</h1>
+
+                    <p>
+
+                        Configure your LifeQuest experience.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Player Settings -->
+
+            <div class="glass settings-card">
+
+                <h2>
+
+                    👤 Player Profile
+
+                </h2>
+
+                <div class="settings-grid">
+
+                    <div class="setting-item">
+
+                        <label>
+
+                            Character Name
+
+                        </label>
+
+                        <input
+                            id="playerNameInput"
+                            type="text"
+                            placeholder="Maverix">
+
+                    </div>
+
+                    <div class="setting-item">
+
+                        <label>
+
+                            Character Rank
+
+                        </label>
+
+                        <input
+                            id="playerRankInput"
+                            type="text"
+                            placeholder="Dream Chaser">
+
+                    </div>
+
+                </div>
+
+                <button
+                    id="saveProfileBtn">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Save Profile
+
+                </button>
+
+            </div>
+
+            <!-- Progress -->
+
+            <div class="glass settings-card">
+
+                <h2>
+
+                    📊 Progress
+
+                </h2>
+
+                <div class="settings-info">
+
+                    <p>
+
+                        Level
+
+                        <strong id="settingsLevel">
+
+                            1
+
+                        </strong>
+
+                    </p>
+
+                    <p>
+
+                        XP
+
+                        <strong id="settingsXP">
+
+                            0
+
+                        </strong>
+
+                    </p>
+
+                    <p>
+
+                        Total Quests
+
+                        <strong id="settingsQuestCount">
+
+                            0
+
+                        </strong>
+
+                    </p>
+
+                    <p>
+
+                        Completed
+
+                        <strong id="settingsCompleted">
+
+                            0
+
+                        </strong>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Danger Zone -->
+
+            <div class="glass settings-card danger-zone">
+
+                <h2>
+
+                    ⚠ Danger Zone
+
+                </h2>
+
+                <p>
+
+                    These actions cannot be undone.
+
+                </p>
+
+                <button
+                    id="resetProgressBtn"
+                    class="danger-btn">
+
+                    <i class="fa-solid fa-trash"></i>
+
+                    Reset All Progress
+
+                </button>
+
+            </div>
+
+        </section>
+
+                        <p class="achievement-description">
+
+                            Description
+
+                        </p>
+
+                        <small class="achievement-date">
+
+                            Locked
+
+                        </small>
+
+                    </div>
+
+                </article>
+
+            </template>
+
+        </section>
+
+        <!-- ==========================================
+             MEMORY VAULT
+        =========================================== -->
+
+        <section
+            id="memory"
+            class="page">
+
+            <div class="page-header glass">
+
+                <div>
+
+                    <h1>📜 Memory Vault</h1>
+
+                    <p>
+
+                        Every completed quest becomes a memory.
+
+                    </p>
+
+                </div>
+
+                <div class="header-badge">
+
+                    <span id="memoryCount">
+
+                        0 Memories
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div
+                id="memoryContainer"
+                class="memory-grid">
+
+            </div>
+
+            <!-- Memory Template -->
+
+            <template id="memoryTemplate">
+
+                <article class="memory-card glass">
+
+                    <img
+                        class="memory-image"
+                        src=""
+                        alt="Memory">
+
+                    <div class="memory-body">
+
+                        <h2 class="memory-title">
+
+                            Quest Title
+
+                        </h2>
+
+                        <p class="memory-notes">
+
+                            Notes...
+
+                        </p>
+
+                        <div class="memory-meta">
+
+                            <span class="memory-date">
+
+                                Completed Today
+
+                            </span>
+
+                            <span class="memory-xp">
+
+                                +0 XP
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </template>
+
+        </section>
+        
+                <!-- ==========================================
+             CREATE / EDIT QUEST MODAL
+        =========================================== -->
+
+        <dialog id="questModal" class="modal">
+
+            <form id="questForm" class="modal-content glass">
+
+                <div class="modal-header">
+
+                    <h2 id="questModalTitle">
+                        Create Quest
+                    </h2>
+
+                    <button type="button" class="close-modal">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <input
+                        id="questTitle"
+                        type="text"
+                        placeholder="Quest Title"
+                        required>
+
+                    <textarea
+                        id="questDescription"
+                        placeholder="Description"></textarea>
+
+                    <textarea
+                        id="questNotes"
+                        placeholder="Personal Notes"></textarea>
+
+                    <input
+                        id="questImage"
+                        type="file"
+                        accept="image/*">
+
+                    <select id="questCategory">
+
+                        <option>Travel</option>
+                        <option>Education</option>
+                        <option>Career</option>
+                        <option>Fitness</option>
+                        <option>Health</option>
+                        <option>Finance</option>
+                        <option>Technology</option>
+                        <option>Dream</option>
+                        <option>Gaming</option>
+                        <option>Adventure</option>
+                        <option>Custom</option>
+
+                    </select>
+
+                    <select id="questPriority">
+
+                        <option>Common</option>
+                        <option>Rare</option>
+                        <option>Epic</option>
+                        <option>Legendary</option>
+
+                    </select>
+
+                    <label>
+
+                        Progress
+
+                    </label>
+
+                    <input
+                        id="questProgress"
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="0">
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="submit">
+
+                        Save Quest
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </dialog>
+
+        <!-- ==========================================
+             ALLY MODAL
+        =========================================== -->
+
+        <dialog id="allyModal" class="modal">
+
+            <form id="allyForm" class="modal-content glass">
+
+                <div class="modal-header">
+
+                    <h2>
+
+                        Recruit Ally
+
+                    </h2>
+
+                    <button type="button" class="close-modal">
+
+                        <i class="fa-solid fa-xmark"></i>
+
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <input
+                        id="allyName"
+                        type="text"
+                        placeholder="Name">
+
+                    <input
+                        id="allyRole"
+                        type="text"
+                        placeholder="Role">
+
+                    <textarea
+                        id="allyNotes"
+                        placeholder="Notes"></textarea>
+
+                    <input
+                        id="allyImage"
+                        type="file"
+                        accept="image/*">
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="submit">
+
+                        Recruit Ally
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </dialog>
+
+        <!-- ==========================================
+             CONFIRMATION MODAL
+        =========================================== -->
+
+        <dialog id="confirmModal" class="modal">
+
+            <div class="modal-content glass">
+
+                <h2>
+
+                    Confirm Action
+
+                </h2>
+
+                <p id="confirmText">
+
+                    Are you sure?
+
+                </p>
+
+                <div class="modal-footer">
+
+                    <button id="confirmYes">
+
+                        Yes
+
+                    </button>
+
+                    <button id="confirmNo">
+
+                        Cancel
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </dialog>
+
+        <!-- ==========================================
+             ACHIEVEMENT POPUP
+        =========================================== -->
+
+        <div id="achievementPopup">
+
+            <i class="fa-solid fa-trophy"></i>
+
+            <div>
+
+                <h3>
+
+                    Achievement Unlocked
+
+                </h3>
+
+                <p id="achievementPopupText">
+
+                    First Quest
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- ==========================================
+             TOAST
+        =========================================== -->
+
+        <div id="toast">
+
+            Saved Successfully
+
+        </div>
+
+    </main>
+
+    <!-- Confetti -->
+
+    <canvas id="confettiCanvas"></canvas>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+  </html>
